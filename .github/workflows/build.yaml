@@ -1,0 +1,42 @@
+name: Building and distributing RF GLTF structure genrator
+on: [ push ]
+
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out repository: ${{ github.repository }}"
+        uses: actions/checkout@v4
+        with:
+          path: source
+      - name: "Check out repository: ${{ github.repository }}"
+        uses: actions/checkout@v4
+        with:
+          path: deploy
+          repository: rohdef/rf-gltf-generator
+          ssh-key: ${{ secrets.RFBPA_DEPLOY_SSH_KEY }}
+      - name: Set up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Build web-app
+        run: |
+          cd source
+          npm ci
+          npm run build
+
+      - name: Deploy
+        run: |
+          git config user.email "rohdef+virk@rohdef.dk"
+          git config user.name "${{ github.actor }}"
+  
+          cd deploy
+          rm -rf *
+          cp ../source/package.json
+          cp -r ../source/dist .
+          
+          git add .
+          git commit --allow-empty -m "Updating deployment"
+          git push
