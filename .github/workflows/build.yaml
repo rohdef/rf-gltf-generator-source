@@ -35,7 +35,7 @@ jobs:
           git config user.name "${{ github.actor }}"
           
           rm -rf *
-          cp ../source/package.json
+          cp ../source/package.json .
           cp -r ../source/dist .
           
           git add .
