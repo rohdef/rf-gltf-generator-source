@@ -5,7 +5,6 @@ jobs:
   build:
     permissions:
       contents: read
-      packages: write
     runs-on: ubuntu-latest
     steps:
       - name: "Check out repository: ${{ github.repository }}"
@@ -17,7 +16,7 @@ jobs:
         with:
           path: deploy
           repository: rohdef/rf-gltf-generator
-          ssh-key: ${{ secrets.RFBPA_DEPLOY_SSH_KEY }}
+          ssh-key: ${{ secrets.BUILD_SSH_KEY }}
       - name: Set up NodeJS
         uses: actions/setup-node@v4
         with:
