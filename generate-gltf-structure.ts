@@ -3,7 +3,7 @@ import Path from "node:path"
 import {GLTFLoader} from "node-three-gltf"
 import {Group, Mesh, Object3D} from "three"
 
-if (process.argv.length != 2) {
+if (process.argv.length != 4) {
     console.error("Usage: generateClasses [gltfPath] [outputPath]")
     console.error("    [gltfPath]   - the glb/gltf file to parse")
     console.error("    [outputPath] - where to put the resulting typescript")
