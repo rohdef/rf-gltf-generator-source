@@ -29,10 +29,11 @@ jobs:
 
       - name: Deploy
         run: |
-          git config user.email "rohdef+virk@rohdef.dk"
-          git config user.name "${{ github.actor }}"
   
           cd deploy
+          git config user.email "rohdef+virk@rohdef.dk"
+          git config user.name "${{ github.actor }}"
+          
           rm -rf *
           cp ../source/package.json
           cp -r ../source/dist .
