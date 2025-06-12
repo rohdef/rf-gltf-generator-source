@@ -1,3 +1,4 @@
+#!/bin/env node
 import * as fs from "node:fs"
 import Path from "node:path"
 import {GLTFLoader} from "node-three-gltf"
