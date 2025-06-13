@@ -31,17 +31,6 @@ function parseGltf(gltfPath: string, outputPath: string) {
     )
 }
 
-function toArrayBuffer(buffer: NonSharedBuffer) {
-    const arrayBuffer = new ArrayBuffer(buffer.length)
-    const view = new Uint8Array(arrayBuffer)
-
-    for (let index = 0; index < buffer.length; index++) {
-        view[index] = buffer[index]
-    }
-
-    return arrayBuffer
-}
-
 function dumpFile(obj: Object3D, path: string, outputFilename: string) {
     const structureCode = dumpObject3d(obj)
     const code = `import {Group, Mesh, Object3D} from "three"
