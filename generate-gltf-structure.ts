@@ -35,8 +35,10 @@ function dumpFile(obj: Object3D, path: string, outputFilename: string) {
     const structureCode = dumpObject3d(obj)
     const code = `import {Group, Mesh, Object3D} from "three"
 
-export const GltfStructure = {
+export function GltfStructure(contained: Object3D) {
+  return {
 ${structureCode}
+  }
 }
 `
 
@@ -47,17 +49,17 @@ ${structureCode}
     fs.writeFileSync(`${path}/${outputFilename}.ts`, code)
 }
 
-function dumpObject3d(object3d: Object3D, indent: string = "  ") {
+function dumpObject3d(object3d: Object3D, indent: string = "    ") {
     let element: string
     switch (object3d.constructor) {
         case Object3D:
-            element = `${indent}element: (contained: Object3D) => (contained.getObjectByName("${object3d.name}") as Object3D),`
+            element = `${indent}get element() { return (contained.getObjectByName("${object3d.name}") as Object3D) },`
             break;
         case Group:
-            element = `${indent}element: (contained: Object3D) => (contained.getObjectByName("${object3d.name}") as Group),`
+            element = `${indent}get element() { return (contained.getObjectByName("${object3d.name}") as Group) },`
             break;
         case Mesh:
-            element = `${indent}element: (contained: Object3D) => (contained.getObjectByName("${object3d.name}") as Mesh),`
+            element = `${indent}element() { return (contained.getObjectByName("${object3d.name}") as Mesh) },`
             break;
         default:
             throw new Error(`Unsupported Object3D type: ${object3d.constructor.name} for object with name: ${object3d.name}`)
