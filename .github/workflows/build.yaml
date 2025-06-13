@@ -21,15 +21,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: Build web-app
         run: |
           cd source
           npm ci
           npm run build
+          npm --no-git-tag-version version "1.0.${{github.run_number}}" -m "Upgrade to new version"
 
       - name: Deploy
         run: |
-  
           cd deploy
           git config user.email "rohdef+virk@rohdef.dk"
           git config user.name "${{ github.actor }}"
